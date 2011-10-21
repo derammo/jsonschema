@@ -43,6 +43,13 @@ class TypeDeserializer extends JsonDeserializer<TypeDeserializer.TypeVariant> {
     }   
 
     /**
+     * A type specified as the boolean 'false' (without quotes), used in additionalItems 
+     * @author ammo
+     */
+    static class FalseType extends TypeDeserializer.TypeVariant {
+    }   
+
+    /**
      * A type specified as an entire schema instance, only found in unions
      * @author ammo
      */
@@ -163,7 +170,10 @@ class TypeDeserializer extends JsonDeserializer<TypeDeserializer.TypeVariant> {
             type = ctxt.getTypeFactory().constructType(SimpleType.class);
             return (TypeVariant) ctxt.getDeserializerProvider().findValueDeserializer(config, type, property)
                     .deserialize(parser, ctxt);
-        case START_OBJECT:
+        case VALUE_FALSE:
+            type = ctxt.getTypeFactory().constructType(FalseType.class);
+            return (TypeVariant) ctxt.getDeserializerProvider().findValueDeserializer(config, type, property)
+                    .deserialize(parser, ctxt);
         default:
         }
         throw new JsonParseException("type must be a simple type or a union (array) of types",

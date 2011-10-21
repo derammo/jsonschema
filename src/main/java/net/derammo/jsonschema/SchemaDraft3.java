@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
+import net.derammo.jsonschema.TypeDeserializer.TypeVariant;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
@@ -58,7 +60,7 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.6">section-5.6</a> of JSON ApplicationSchema draft 3
      */
-    private Object additionalItems;
+    private TypeDeserializer.TypeVariant additionalItems;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.7">section-5.7</a> of JSON ApplicationSchema draft 3
      */
@@ -66,7 +68,7 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.8">section-5.8</a> of JSON ApplicationSchema draft 3
      */
-    private Object dependencies;
+    private LinkedHashMap<String, TypeDeserializer.TypeVariant> dependencies;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.9">section-5.9</a> of JSON ApplicationSchema draft 3
      */
@@ -139,9 +141,11 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
     private TypeDeserializer.TypeVariant disallow;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.26">section-5.26</a> of JSON ApplicationSchema draft 3
+     *
+     * Note that the Jackson ObjectMapper is configured to convert a single string to an array containing a single string. 
      */
     @JsonProperty("extends")
-    private Object extendsSchemas;
+    private ArrayList<String> extendsSchemas;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.27">section-5.27</a> of JSON ApplicationSchema draft 3
      */
@@ -272,15 +276,19 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
         return additionalItems;
     }
 
-    public void setAdditionalItems(Object additionalItems) {
+    public void setAdditionalItems(TypeDeserializer.TypeVariant additionalItems) {
+        // TODO: do something intelligent with FalseType and SchemaType
         this.additionalItems = additionalItems;
     }
 
-    public Object getDependencies() {
+    public LinkedHashMap<String, TypeVariant> getDependencies() {
         return dependencies;
     }
 
-    public void setDependencies(Object dependencies) {
+    public void setDependencies(LinkedHashMap<String, TypeVariant> dependencies) {
+        // TODO: match up the dependencies to the properties and do something with them
+        // TypeVariant may be SimpleType, SchemaType, or 
+        // UnionType (need to check to make sure it only contains SimpleType)
         this.dependencies = dependencies;
     }
 
@@ -411,11 +419,11 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
         this.disallow = disallow;
     }
 
-    public Object getExtendsSchemas() {
+    public ArrayList<String> getExtendsSchemas() {
         return extendsSchemas;
     }
 
-    public void setExtendsSchemas(Object extendsSchemas) {
+    public void setExtendsSchemas(ArrayList<String> extendsSchemas) {
         this.extendsSchemas = extendsSchemas;
     }
 
