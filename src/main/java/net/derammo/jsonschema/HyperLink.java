@@ -12,31 +12,32 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 package net.derammo.jsonschema;
 
 public class HyperLink {
-    String href;
-    Relation rel;
-    
-    public enum Relation {
-        related
-    }
+  String href;
+  Relation rel;
 
-    public String getHref() {
-        return href;
-    }
+  public enum Relation {
+    related
+  }
 
-    public void setHref(String href) {
-        this.href = href;
-    }
+  public String getHref() {
+    // REVISIT: this class should handle the URI escaping rules 
+    // for this field, since java.net.URI cannot handle JSON pointers 
+    return href;
+  }
 
-    public Relation getRel() {
-        return rel;
-    }
+  public void setHref(String href) {
+    this.href = href;
+  }
 
-    public void setRel(Relation rel) {
-        this.rel = rel;
-    }
+  public Relation getRel() {
+    return rel;
+  }
+
+  public void setRel(Relation rel) {
+    this.rel = rel;
+  }
 }
-

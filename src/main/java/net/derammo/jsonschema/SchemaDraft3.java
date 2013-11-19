@@ -49,7 +49,7 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.4">section-5.4</a> of JSON ApplicationSchema draft 3
      */
-    private boolean additionalProperties;
+    private boolean additionalProperties = false;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.5">section-5.5</a> of JSON ApplicationSchema draft 3
      * 
@@ -64,7 +64,7 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.7">section-5.7</a> of JSON ApplicationSchema draft 3
      */
-    private boolean required;
+    private boolean required = false;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.8">section-5.8</a> of JSON ApplicationSchema draft 3
      */
@@ -72,31 +72,31 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.9">section-5.9</a> of JSON ApplicationSchema draft 3
      */
-    private long minimum;
+    private long minimum = Long.MIN_VALUE;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.10">section-5.10</a> of JSON ApplicationSchema draft 3
      */
-    private long maximum;
+    private long maximum = Long.MAX_VALUE;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.11">section-5.11</a> of JSON ApplicationSchema draft 3
      */
-    private boolean exclusiveMinimum;
+    private boolean exclusiveMinimum = false;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.12">section-5.12</a> of JSON ApplicationSchema draft 3
      */
-    private boolean exclusiveMaximum;
+    private boolean exclusiveMaximum = false;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.13">section-5.13</a> of JSON ApplicationSchema draft 3
      */
-    private int minItems;
+    private int minItems = 0;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.14">section-5.14</a> of JSON ApplicationSchema draft 3
      */
-    private int maxItems;
+    private int maxItems = Integer.MAX_VALUE;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.15">section-5.15</a> of JSON ApplicationSchema draft 3
      */
-    private boolean uniqueItems;
+    private boolean uniqueItems = false;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.16">section-5.16</a> of JSON ApplicationSchema draft 3
      */
@@ -104,18 +104,20 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.17">section-5.17</a> of JSON ApplicationSchema draft 3
      */
-    private int minLength;
+    private int minLength = 0;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.18">section-5.18</a> of JSON ApplicationSchema draft 3
      */
-    private int maxlength;
+    private int maxlength = Integer.MAX_VALUE;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.19">section-5.19</a> of JSON ApplicationSchema draft 3
+     * Simplified to only support string values, instead of general JSON 
      */
     @JsonProperty("enum")
-    private LinkedHashSet<String> enumerated;
+    private ArrayList<String> enumerated;
     /**
      * @see <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.20">section-5.20</a> of JSON ApplicationSchema draft 3
+     * Simplified to only support string values, instead of general JSON 
      */
     @JsonProperty("default")
     private String defaultValue;
@@ -364,11 +366,11 @@ public class SchemaDraft3<ApplicationSchema extends SchemaDraft3<ApplicationSche
         this.maxlength = maxlength;
     }
 
-    public LinkedHashSet<String> getEnumerated() {
+    public ArrayList<String> getEnumerated() {
         return enumerated;
     }
 
-    public void setEnumerated(LinkedHashSet<String> enumerated) {
+    public void setEnumerated(ArrayList<String> enumerated) {
         this.enumerated = enumerated;
     }
 
